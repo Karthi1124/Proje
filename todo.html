@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List with Time</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('Wallpaper.jpg');background-repeat: no-repeat;background-size: cover;
+        }
+        .container {
+            background:rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+            width: 400px;
+            text-align: center;
+        }
+        h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color:#ff5722;
+        }
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            background: #3c3c3c;
+            color: white;
+        }
+        button {
+            background: #ff5722;
+            color: white;
+            border: none;
+            padding: 12px;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #000000;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        li {
+            background: #444;
+            margin: 10px 0;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 8px;
+            font-size: 18px;
+        }
+        li span {
+            color: #ffcc00;
+        }
+        .edit-btn, .complete-btn, .remove-btn {
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .edit-btn {
+            background: #007bff;
+        }
+        .complete-btn {
+            background: #28a745;
+        }
+        .remove-btn {
+            background: #d32f2f;
+        }
+        .completed {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>To-Do List</h2>
+        <input type="text" id="taskInput" placeholder="Enter task">
+        <input type="time" id="timeInput">
+        <button onclick="addTask()">Add Task</button>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        function addTask() {
+            let taskInput = document.getElementById("taskInput");
+            let timeInput = document.getElementById("timeInput");
+            let taskList = document.getElementById("taskList");
+            let taskText = taskInput.value.trim();
+            let taskTime = timeInput.value;
+            
+            if (taskText === "" || taskTime === "") return;
+            
+            let li = document.createElement("li");
+            li.innerHTML = `${taskText} <span>(${taskTime})</span> 
+                <button class="edit-btn" onclick="editTask(this)">Edit</button>
+                <button class="complete-btn" onclick="completeTask(this)">Completed</button>
+                <button class="remove-btn" onclick="removeTask(this)">X</button>`;
+            taskList.appendChild(li);
+            taskInput.value = "";
+            timeInput.value = "";
+        }
+
+        function removeTask(button) {
+            button.parentElement.remove();
+        }
+
+        function completeTask(button) {
+            button.parentElement.classList.toggle("completed");
+        }
+
+        function editTask(button) {
+            let li = button.parentElement;
+            let taskText = li.childNodes[0].nodeValue.trim();
+            let timeText = li.querySelector("span").innerText.replace(/[()]/g, "");
+            
+            let newTaskText = prompt("Edit Task:", taskText);
+            let newTimeText = prompt("Edit Time:", timeText);
+            
+            if (newTaskText !== null && newTimeText !== null) {
+                li.innerHTML = `${newTaskText} <span>(${newTimeText})</span> 
+                    <button class="edit-btn" onclick="editTask(this)">Edit</button>
+                    <button class="complete-btn" onclick="completeTask(this)">Completed</button>
+                    <button class="remove-btn" onclick="removeTask(this)">X</button>`;
+            }
+        }
+    </script>
+</body>
+</html>

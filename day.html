@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Date</title>
+</head>
+<body>
+    <p>Today's date is: <span id="date"></span></p>
+    <script>
+        const currentDate = new Date();
+        const formattedDate = currentDate.toLocaleDateString();
+        document.getElementById("date").textContent = formattedDate;
+    </script>
+</body>
+</html>
